@@ -164,7 +164,7 @@ const Navbar: React.FC<NavbarProps> = ({ currentUser }) => {
                     viewBox="0 100 450 200"
                     preserveAspectRatio="xMidYMid meet"
                     version="1.0"
-                    className="w-[250px] h-[200px]"
+                    className="w-[220px] h-[200px] md:w-[250px] md:h-[200px]"
                   >
                     <defs>
                       <g />
@@ -519,8 +519,8 @@ const Navbar: React.FC<NavbarProps> = ({ currentUser }) => {
 
             <div className="-mr-2 flex justify-center items-center md:hidden ">
               {currentUser && (
-                <div className="ml-10 relative">
-                  <div className="relative inline-flex mr-10 mt-4">
+                <div className="md:ml-10 relative">
+                  <div className="relative inline-flex mr-5 mt-4">
                     <span className="absolute rounded-full py-1 px-1 text-xs font-medium content-[''] leading-none grid place-items-center top-[4%] right-[2%] translate-x-2/4 -translate-y-2/4 bg-purple-600 text-white min-w-[24px] min-h-[24px]">
                       {unseenCount}
                     </span>
