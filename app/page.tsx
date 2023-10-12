@@ -10,7 +10,6 @@ import getCurrentUser from "./actions/getCurrentUser";
 const Page = async () => {
   const loading = false;
   const currentUser = await getCurrentUser();
-  console.log(currentUser.data.userinformation.isBlocked);
 
   return (
     <>
