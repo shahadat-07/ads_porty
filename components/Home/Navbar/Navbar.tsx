@@ -151,7 +151,7 @@ const Navbar: React.FC<NavbarProps> = ({ currentUser }) => {
   };
 
   return (
-    <nav className="bg-gray-50 border py-1 shadow-md fixed w-full z-10">
+    <nav className="bg-gray-50 border py-1 shadow-md fixed w-full z-20">
       <>
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex items-center justify-between h-16">
@@ -451,20 +451,13 @@ const Navbar: React.FC<NavbarProps> = ({ currentUser }) => {
                       </g>
                     </g>
                   </svg>
-                  {/* <Image
-                    className=""
-                    src={Logo}
-                    alt="Workflow"
-                    width={200}
-                    height={200}
-                  /> */}
                 </Link>
               </div>
 
               <div className="hidden md:block">
                 {currentUser ? (
                   currentUser.userinformation.isBlocked ? (
-                    <div></div> // Blocked user, don't render anything
+                    <div></div>
                   ) : (
                     // Render navigation links for logged-in user
                     <div className="ml-10 flex items-center justify-center space-x-4">
@@ -474,7 +467,13 @@ const Navbar: React.FC<NavbarProps> = ({ currentUser }) => {
                       <NavLink url="wallet" text="Wallet" />
                       <NavLink url="profile" text="Profile" />
                       <NavLink url="trx_history" text="Payment History" />
-
+                      <Link
+                        onClick={() => setIsOpen(!isOpen)}
+                        href="/contact"
+                        className="hover:bg-gray-700 font-semibold hover:cursor-pointer hover:text-white text-black block px-3 py-2 rounded-md text-base"
+                      >
+                        Contact Us
+                      </Link>
                       <div className="ml-10 relative">
                         <div className="relative inline-flex">
                           <span className="absolute rounded-full py-1 px-1 text-xs font-medium content-[''] leading-none grid place-items-center top-[4%] right-[2%] translate-x-2/4 -translate-y-2/4 bg-purple-600 text-white min-w-[24px] min-h-[24px]">
@@ -625,7 +624,7 @@ const Navbar: React.FC<NavbarProps> = ({ currentUser }) => {
                                         ? "bg-red-100"
                                         : "bg-purple-100"
                                       : "bg-gray-100"
-                                  } mb-2 w-full p-3 flex rounded-md `}
+                                  } mb-2 w-full p-3 flex rounded-md items-center `}
                                 >
                                   <div
                                     aria-label="heart icon"
@@ -649,12 +648,12 @@ const Navbar: React.FC<NavbarProps> = ({ currentUser }) => {
                                     <p className="focus:outline-none text-sm leading-5">
                                       {item?.message}
                                     </p>
-                                    <p className="focus:outline-none text-xs leading-3 pt-1 text-gray-500">
+                                    {/* <p className="focus:outline-none text-xs leading-3 pt-1 text-gray-500">
                                       {formatTimeDifference(
                                         item?.date,
                                         item?.time
                                       )}
-                                    </p>
+                                    </p> */}
                                   </div>
                                 </div>
                               ))}
@@ -716,6 +715,12 @@ const Navbar: React.FC<NavbarProps> = ({ currentUser }) => {
                   <p className="text-purple-700 font-medium">
                     Hi {currentUser?.userinformation?.name}
                   </p>
+                  <Link
+                    href="/contact"
+                    className="bg-purple-700 hover:bg-purple-800 font-semibold hover:cursor-pointer text-white block px-3 py-2 rounded-md text-base"
+                  >
+                    Contact Us
+                  </Link>
                   <button
                     onClick={handleLogout}
                     className="bg-purple-700 hover:bg-purple-800 hover:cursor-pointer
@@ -760,51 +765,83 @@ const Navbar: React.FC<NavbarProps> = ({ currentUser }) => {
                 {loading ? null : currentUser ? (
                   // Render mobile navigation links for logged-in user
                   <>
-                    <p className="text-purple-700 font-medium mt-3 px-3">
-                      Hi {currentUser?.userinformation?.name}
-                    </p>
-                    <NavLink
-                      onClick={() => setIsOpen(!isOpen)}
-                      url="/"
-                      text="Ads & Games"
-                    />
-                    <NavLink
-                      onClick={() => setIsOpen(!isOpen)}
-                      url="deposit"
-                      text="Deposit"
-                    />
-                    <NavLink
-                      onClick={() => setIsOpen(!isOpen)}
-                      url="withdraw"
-                      text="Withdraw"
-                    />
-                    <NavLink
-                      onClick={() => setIsOpen(!isOpen)}
-                      url="wallet"
-                      text="Wallet"
-                    />
-                    <NavLink
-                      onClick={() => setIsOpen(!isOpen)}
-                      url="profile"
-                      text="Profile"
-                    />
-
-                    <NavLink
-                      onClick={() => setIsOpen(!isOpen)}
-                      url="trx_history"
-                      text="Payment History"
-                    />
-
-                    <div className="pl-3 mt-3">
-                      <button
-                        onClick={handleLogout}
-                        className="bg-purple-700 hover:bg-purple-800 hover:cursor-pointer
+                    {currentUser?.userinformation?.isBlocked ? (
+                      <>
+                        <div className="flex flex-col gap-6 items-start">
+                          <p className="text-purple-700 font-medium">
+                            Hi {currentUser?.userinformation?.name}
+                          </p>
+                          <Link
+                            href="/contact"
+                            className="bg-purple-700 hover:bg-purple-800 font-semibold hover:cursor-pointer text-white block px-3 py-2 rounded-md text-base"
+                          >
+                            Contact Us
+                          </Link>
+                          <button
+                            onClick={handleLogout}
+                            className="bg-purple-700 hover:bg-purple-800 hover:cursor-pointer
           font-semibold text-white py-2 px-6 border
-           border-purple-500 hover:border-transparent rounded"
-                      >
-                        Log Out
-                      </button>
-                    </div>
+           border-purple-500 hover:border-transparent rounded-md text-sm"
+                          >
+                            Log Out
+                          </button>
+                        </div>
+                      </>
+                    ) : (
+                      <>
+                        <p className="text-purple-700 font-medium mt-3 px-3">
+                          Hi {currentUser?.userinformation?.name}
+                        </p>
+                        <NavLink
+                          onClick={() => setIsOpen(!isOpen)}
+                          url="/"
+                          text="Ads & Games"
+                        />
+                        <NavLink
+                          onClick={() => setIsOpen(!isOpen)}
+                          url="deposit"
+                          text="Deposit"
+                        />
+                        <NavLink
+                          onClick={() => setIsOpen(!isOpen)}
+                          url="withdraw"
+                          text="Withdraw"
+                        />
+                        <NavLink
+                          onClick={() => setIsOpen(!isOpen)}
+                          url="wallet"
+                          text="Wallet"
+                        />
+                        <NavLink
+                          onClick={() => setIsOpen(!isOpen)}
+                          url="profile"
+                          text="Profile"
+                        />
+
+                        <Link
+                          onClick={() => setIsOpen(!isOpen)}
+                          href="/contact"
+                          className="hover:bg-gray-700 font-semibold hover:cursor-pointer hover:text-white text-black block px-3 py-2 rounded-md text-base"
+                        >
+                          Contact Us
+                        </Link>
+
+                        <NavLink
+                          onClick={() => setIsOpen(!isOpen)}
+                          url="trx_history"
+                          text="Payment History"
+                        />
+
+                        <div className="pl-3 mt-3">
+                          <button
+                            onClick={handleLogout}
+                            className="bg-purple-700 hover:bg-purple-800 hover:cursor-pointer font-semibold text-white py-2 px-6 border border-purple-500 hover:border-transparent rounded"
+                          >
+                            Log Out
+                          </button>
+                        </div>
+                      </>
+                    )}
                   </>
                 ) : (
                   // Render mobile navigation links for non-logged-in user
@@ -814,20 +851,15 @@ const Navbar: React.FC<NavbarProps> = ({ currentUser }) => {
                       url="/"
                       text="Home"
                     />
-
-                    {/* <Link href="/#settings">Settings</Link> */}
-
                     <Link
                       href="/#tutorial"
                       className="hover:bg-gray-700 font-semibold hover:cursor-pointer hover:text-white text-black block px-3 py-2 rounded-md text-base"
-                      // onClick={onClick}
                     >
                       Tutorial
                     </Link>
                     <Link
                       href="/#contact"
                       className="hover:bg-gray-700 font-semibold hover:cursor-pointer hover:text-white text-black block px-3 py-2 rounded-md text-base"
-                      // onClick={onClick}
                     >
                       Contact Us
                     </Link>
@@ -842,7 +874,7 @@ const Navbar: React.FC<NavbarProps> = ({ currentUser }) => {
                       <Link
                         onClick={() => setIsOpen(!isOpen)}
                         href="/signup"
-                        className="bg-purple-700 w-1/3 hover:bg-purple-800  font-semibold text-white py-2 px-6 border border-purple-500 hover:border-transparent rounded"
+                        className="bg-purple-700 w-1/3 hover:bg-purple-800 font-semibold text-white py-2 px-6 border border-purple-500 hover:border-transparent rounded"
                       >
                         Sign Up
                       </Link>

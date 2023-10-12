@@ -14,7 +14,7 @@ const Game: React.FC<GameProps> = ({
   currentUser,
   isPredictionSubmitted,
 }) => {
-  // console.log(game.teams);
+  // console.log(game);
   const cookies = new Cookies();
   const token = cookies.get("jwt");
   const router = useRouter();
@@ -182,16 +182,66 @@ const Game: React.FC<GameProps> = ({
         toast.error("Something went wrong!");
       }
     }
-    //  finally {
-    //   setDisabled(false);
-    // }
   };
+
+  function convertTo12HourFormat(time: string) {
+    const [hour, minute] = time.split(":");
+    let amPm = "AM";
+    let hour12 = parseInt(hour, 10); // Parse the hour as an integer with base 10
+
+    if (hour12 >= 12) {
+      amPm = "PM";
+      if (hour12 > 12) {
+        hour12 -= 12;
+      } else if (hour12 === 12) {
+        // Special case for 12:xx AM
+        amPm = "AM";
+      }
+    } else if (hour12 === 0) {
+      // Special case for 00:xx AM
+      hour12 = 12;
+    }
+
+    // Ensure that single-digit hours are formatted with a leading zero.
+    const hour12String = hour12 < 10 ? `0${hour12}` : hour12.toString();
+
+    return `${hour12String}:${minute} ${amPm}`;
+  }
+
+
+  const currentTime = new Date(); // Get the current date and time
+
+  // Combine the game's date and time into a single string and convert it to a Date object
+  const gameDateTime = new Date(`${game.match_date}T${game.match_time}`);
+
+  // Compare the game date and time with the current date and time
+  const isGameTimePassed = gameDateTime < currentTime;
+
+  useEffect(() => {
+    if (
+      // Check if the game date and time have passed and the user hasn't predicted the game
+      isGameTimePassed &&
+      !isPredictionSubmitted
+    ) {
+      // Disable the button
+      setDisabled(true);
+    }
+    // ... (previous code)
+  }, [
+    game.winning_team,
+    game.id,
+    isPredictionSubmitted,
+    currentUser?._id,
+    isApiCalled,
+    router,
+    isGameTimePassed,
+  ]);
 
   return (
     <div
       className={`${
         game?.winning_team === "Not Defined" ? "" : "hidden"
-      } mb-8 border px-4 py-2`}
+      } mb-4 border border-purple-500 rounded-lg p-5`}
     >
       {isPredictionSubmitted ? (
         <div className="p-2 md:p-5">
@@ -311,46 +361,40 @@ const Game: React.FC<GameProps> = ({
         </div>
       ) : (
         <div>
-          <div className={` flex flex-col md:flex-row justify-between `}>
-            <div className="flex justify-center">
-              <p className="md:text-lg mb-2 md:mb-0">
-                {/* {isPredictionSubmitted} */}
-                {game.which_sport} / {game.match_type} ({game.prediction_type})
-              </p>
-            </div>
+          <div className="flex justify-between">
+            <h1>Match Date: {game?.match_date}</h1>
+            <h1>Match Time: {convertTo12HourFormat(game?.match_time)} </h1>
+          </div>
 
-            <div className="border-2 p-2 border-purple-200 text-purple-600 font-semibold rounded-lg bg-purple-50 text-center">
-              {game?.teams?.map((team: string, teamIndex: any) => (
-                <span key={teamIndex}>
-                  {team}
-                  {teamIndex < game?.teams?.length - 1 && (
-                    <span className="mx-1">vs</span>
-                  )}
-                </span>
-              ))}
-            </div>
-          </div>
-          <div className="flex justify-between max-w-xl mx-auto mt-5 md:mt-10">
+          <div className="flex flex-col md:flex-row gap-3 justify-between max-w-xl mx-auto mt-5 md:mt-10">
             {game.teams.map((team, teamIndex) => (
-              <button
-                key={teamIndex}
-                className={`flex items-center justify-center border rounded-lg px-4 py-2 ${
-                  selectedTeams.includes(team) ? "bg-purple-600 text-white" : ""
-                }`}
-                onClick={() => toggleTeamSelection(team)}
-              >
-                {team}
-              </button>
+              <React.Fragment key={teamIndex}>
+                <button
+                  className={`flex items-center justify-center border rounded-lg px-4 py-2 ${
+                    selectedTeams.includes(team)
+                      ? "bg-purple-600 text-white"
+                      : ""
+                  }`}
+                  onClick={() => toggleTeamSelection(team)}
+                >
+                  {team}
+                </button>
+                {teamIndex < game.teams.length - 1 && (
+                  <button
+                    className={`flex items-center justify-center border rounded-lg px-4 py-2 ${
+                      selectedTeams.includes("Draw")
+                        ? "bg-purple-600 text-white"
+                        : ""
+                    }`}
+                    onClick={() => toggleTeamSelection("Draw")}
+                  >
+                    Draw
+                  </button>
+                )}
+              </React.Fragment>
             ))}
-            <button
-              className={`flex items-center justify-center border rounded-lg px-4 py-2 ${
-                selectedTeams.includes("Draw") ? "bg-purple-600 text-white" : ""
-              }`}
-              onClick={() => toggleTeamSelection("Draw")}
-            >
-              Draw
-            </button>
           </div>
+
           <div className="my-8 max-w-xl mx-auto">
             {selectedTeams.map((team, teamIndex) => (
               <div
@@ -399,45 +443,12 @@ const Game: React.FC<GameProps> = ({
   );
 };
 
-// const BettingCard: React.FC<{
-//   siteInformations: SiteInformations;
-//   currentUser: User;
-// }> = ({ siteInformations, currentUser }) => {
-//   return (
-//     <div className="max-w-3xl mx-auto border border-purple-500 bg-white rounded-lg shadow-lg p-4 mt-8 mb-section-gap-sm md:mb-section-gap">
-//       {siteInformations?.uploadGames?.length > 0 ? (
-//         siteInformations?.uploadGames
-//           .filter((game) => game.winning_team === "Not Defined")
-//           .map((game, index) => {
-//             const isPredictionSubmitted =
-//               currentUser?.gamesPredictionHistory.some(
-//                 (prediction) => prediction.gameId === game.id
-//               );
-
-//             return (
-//               <Game
-//                 key={index}
-//                 game={game}
-//                 rate={siteInformations.game_percentage_rate}
-//                 currentUser={currentUser}
-//                 isPredictionSubmitted={isPredictionSubmitted}
-//               />
-//             );
-//           })
-//       ) : (
-//         <p className="text-center font-semibold">No Games to Show!</p>
-//       )}
-//     </div>
-//   );
-// };
-
 const BettingCard: React.FC<{
   siteInformations: SiteInformations;
   currentUser: User;
 }> = ({ siteInformations, currentUser }) => {
-  // console.log(siteInformations);
   return (
-    <div className="max-w-3xl mx-auto border border-purple-500 bg-white rounded-lg shadow-lg p-4 mt-8 mb-section-gap-sm md:mb-section-gap">
+    <div className="max-w-3xl mx-auto bg-white rounded-lg border p-4 mt-8 mb-section-gap-sm md:mb-section-gap">
       {siteInformations?.uploadGames?.length > 0 ? (
         siteInformations?.uploadGames?.map((game, index) => {
           // console.log(game);
@@ -445,7 +456,6 @@ const BettingCard: React.FC<{
             currentUser?.gamesPredictionHistory.some(
               (prediction) => prediction.gameId === game.id
             );
-
           return (
             <Game
               key={index}

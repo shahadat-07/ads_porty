@@ -180,14 +180,6 @@ const Deposit: React.FC<DepositProps> = ({
       return HotToast.error("The Transaction ID has already been used!");
     }
 
-    // if (isDuplicateTransaction(allUsers, trxId)) {
-    //   setDisabled(false);
-    //   return toast.error("The Transaction ID has already been utilized", {
-    //     autoClose: false, // Prevents auto-close
-    //     closeButton: true, // Enables the close button
-    //   });
-    // }
-
     const jwtToken = token;
 
     const axiosInstance = axios.create({

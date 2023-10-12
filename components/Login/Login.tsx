@@ -40,8 +40,6 @@ export default function Login() {
       .catch((error: any) => {
         if (error.response && error.response.data) {
           const errorMessage = error.response.data.message;
-          console.log("error", error);
-          console.log("errormessage", errorMessage);
           toast.error(errorMessage);
         } else {
           toast.error("Something went wrong!");
