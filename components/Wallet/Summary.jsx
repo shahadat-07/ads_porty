@@ -282,12 +282,11 @@ const Summary = ({ currentUser }) => {
                       />
                     </div>
                     <div className="flex flex-col gap-2">
-                      <label className="text-sm">Selected Wallet</label>
                       <input
                         type="text"
                         required
                         className="px-3 border p-1 w-full mb-4 rounded-lg"
-                        value="Ads Wallet"
+                        value="Transfer Amount to Games Wallet"
                         disabled
                       />
                     </div>
@@ -356,12 +355,11 @@ const Summary = ({ currentUser }) => {
                       />
                     </div>
                     <div className="flex flex-col gap-2">
-                      <label className="text-sm">Selected Wallet</label>
                       <input
                         type="text"
                         required
                         className="px-3 border p-1 w-full mb-4 rounded-lg"
-                        value="Games Wallet"
+                        value="Transfer Amount to Ads Wallet"
                         disabled
                       />
                     </div>
