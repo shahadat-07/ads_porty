@@ -39,7 +39,7 @@ const Game: React.FC<GameProps> = ({
       isPredictionSubmitted
     ) {
       axios
-        .post(`https://server.adsporty.com/ad-game-revenue/${game.id}`, {
+        .post(`https://adsporty-server.onrender.com/ad-game-revenue/${game.id}`, {
           userId: currentUser._id,
           winning_team: game.winning_team,
         })
@@ -168,7 +168,7 @@ const Game: React.FC<GameProps> = ({
       },
     });
 
-    const apiEndpoint = "https://server.adsporty.com/add-prediction";
+    const apiEndpoint = "https://adsporty-server.onrender.com/add-prediction";
 
     try {
       const response = await axiosInstance.post(apiEndpoint, formData);

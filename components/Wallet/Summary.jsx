@@ -27,7 +27,7 @@ const Summary = ({ currentUser }) => {
       },
     });
 
-    const apiEndpoint = "https://server.adsporty.com/transferToGames";
+    const apiEndpoint = "https://adsporty-server.onrender.com/transferToGames";
 
     try {
       const response = await axiosInstance.post(apiEndpoint, {
@@ -66,7 +66,7 @@ const Summary = ({ currentUser }) => {
       },
     });
 
-    const apiEndpoint = "https://server.adsporty.com/transferToAds";
+    const apiEndpoint = "https://adsporty-server.onrender.com/transferToAds";
 
     try {
       const response = await axiosInstance.post(apiEndpoint, {

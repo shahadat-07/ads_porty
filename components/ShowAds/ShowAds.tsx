@@ -103,7 +103,7 @@ const ShowAds: React.FC<ShowAdsProps> = ({ currentUser }) => {
     const todaysDate = `${formattedDay}-${monthIndex}-${year}`;
 
     axios
-      .post("https://server.adsporty.com/calculate-ads-revenue", {
+      .post("https://adsporty-server.onrender.com/calculate-ads-revenue", {
         userId: currentUser?._id,
       })
       .then((res) => {
@@ -122,7 +122,7 @@ const ShowAds: React.FC<ShowAdsProps> = ({ currentUser }) => {
       });
 
     axios
-      .get("https://server.adsporty.com/admin/get-informations")
+      .get("https://adsporty-server.onrender.com/admin/get-informations")
       .then((res) => {
         setAdsData(res.data.data[0].ad_images);
       })

@@ -45,7 +45,7 @@ const AdModal: React.FC<{
 
   // Handle ads revenue add to database
   const handleClose = async (id: string) => {
-    const apiEndpoint = "https://server.adsporty.com/add-ad-revenue";
+    const apiEndpoint = "https://adsporty-server.onrender.com/add-ad-revenue";
 
     // console.log("this is game id", id);
 

@@ -25,7 +25,7 @@ export default function Login() {
     setIsLoading(true);
 
     axios
-      .post("https://server.adsporty.com/login", formData)
+      .post("https://adsporty-server.onrender.com/login", formData)
       .then((res) => {
         const token = res.data.token;
         const decoded = jwt(token) as { exp: number };

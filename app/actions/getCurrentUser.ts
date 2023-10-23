@@ -14,7 +14,7 @@ export default async function getCurrentUser() {
 
       id = decodedToken.id;
 
-      const res = await axios.get(`https://server.adsporty.com/currentUser/${id}`);
+      const res = await axios.get(`https://adsporty-server.onrender.com/currentUser/${id}`);
       return res.data;
     } catch (error) {
       console.error("");

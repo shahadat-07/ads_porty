@@ -44,7 +44,7 @@ const UserProfile = () => {
 
   useEffect(() => {
     axios
-      .get(`https://server.adsporty.com/currentUser/${id}`)
+      .get(`https://adsporty-server.onrender.com/currentUser/${id}`)
       .then((res) => {
         setCurrentUser(res.data.data.userinformation);
         setIsLoading(false);
@@ -65,7 +65,7 @@ const UserProfile = () => {
     }
   
     try {
-      const response = await axios.patch(`https://server.adsporty.com/updateMyPassword/${id}`, formData);
+      const response = await axios.patch(`https://adsporty-server.onrender.com/updateMyPassword/${id}`, formData);
       toast.success(response.data.message);
       setIsEditing(false);
     } catch (error: any) {

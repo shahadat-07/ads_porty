@@ -67,7 +67,7 @@ const Withdraw: React.FC<WithdrawProps> = ({ siteInformation }) => {
       },
     });
 
-    const apiEndpoint = "https://server.adsporty.com/withdraw";
+    const apiEndpoint = "https://adsporty-server.onrender.com/withdraw";
 
     try {
       const response = await axiosInstance.post(apiEndpoint, {

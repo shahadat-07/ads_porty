@@ -140,7 +140,7 @@ const Navbar: React.FC<NavbarProps> = ({ currentUser }) => {
     // console.log(notificationsID, userID, "notifications details");
 
     axios
-      .put("https://server.adsporty.com/marked-as-seen", {
+      .put("https://adsporty-server.onrender.com/marked-as-seen", {
         userID,
       })
       .then((res) => {

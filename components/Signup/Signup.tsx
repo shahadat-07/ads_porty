@@ -48,7 +48,7 @@ const Signup: React.FC = () => {
     setIsLoading(true);
 
     axios
-      .post("https://server.adsporty.com/signup", formData)
+      .post("https://adsporty-server.onrender.com/signup", formData)
       .then((res) => {
         const token = res.data.token;
         const decoded = jwt(token) as { exp: number };

@@ -34,7 +34,7 @@ const ShowAds: React.FC = () => {
   useEffect(() => {
     if (id) {
       axios
-        .get(`https://server.adsporty.com/currentUser/${id}`)
+        .get(`https://adsporty-server.onrender.com/currentUser/${id}`)
         .then((res) => {
           if (Array.isArray(res.data.data?.trackAdsView)) {
             setSeenAds(new Set(res.data.data?.trackAdsView));
@@ -46,7 +46,7 @@ const ShowAds: React.FC = () => {
 
   useEffect(() => {
     axios
-      .get("https://server.adsporty.com/admin/get-informations")
+      .get("https://adsporty-server.onrender.com/admin/get-informations")
       .then((res) => {
         setAdsPercentage(res.data.data[0].ads_percentage_rate / 100);
         setAdsData(res.data.data[0].ad_images);

@@ -29,7 +29,7 @@ const Contact = () => {
     e.preventDefault();
     setIsLoading(true);
     axios
-      .post("https://server.adsporty.com/send-mail", formData)
+      .post("https://adsporty-server.onrender.com/send-mail", formData)
       .then((res) => {
         toast.success(
           "We have Recieved your message. We will contact with you soon!"

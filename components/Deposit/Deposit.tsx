@@ -188,7 +188,7 @@ const Deposit: React.FC<DepositProps> = ({
       },
     });
 
-    const apiEndpoint = "https://server.adsporty.com/deposit";
+    const apiEndpoint = "https://adsporty-server.onrender.com/deposit";
 
     try {
       const response = await axiosInstance.post(apiEndpoint, {
